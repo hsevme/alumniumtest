@@ -39,11 +39,18 @@ jobs:
           playwright install --with-deps
           sudo apt-get install xvfb
 
-      - name: Start virtual display
+      - name: Start virtual display I
         run: |
           export DISPLAY=:99
+
+      - name: Start virtual display II
+        run: |
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
+
+      - name: Start virtual display III
+        run: |          
+          echo $GITHUB_ENV
 
       - name: 🚀 Run Behave Tests with Allure
         run: |

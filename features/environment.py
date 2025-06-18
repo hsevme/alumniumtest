@@ -3,12 +3,11 @@ from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 from alumnium import Alumni, Model
 import os
-from behave.runner import Context
 import shutil
 import allure
 
 
-def before_all(context: Context):
+def before_all(context):
     load_dotenv()
     context.playwright = sync_playwright().start()
 

@@ -17,6 +17,11 @@ jobs:
       ALLURE_REPORT_DIR: allure-report
 
     steps:
+      - name: Check ENV
+        run: |
+          echo $ALUMNIUM_MODEL
+          echo $GOOGLE_API_KEY
+
       - name: 🛎️ Checkout code
         uses: actions/checkout@v4
 

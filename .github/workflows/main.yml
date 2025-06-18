@@ -1,0 +1,62 @@
+name: Run Tests and Generate Allure Report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      ALLURE_RESULTS_DIR: allure-results
+      ALLURE_REPORT_DIR: allure-report
+
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y ffmpeg curl unzip
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install --with-deps
+
+      - name: 🚀 Run Behave Tests with Allure
+        run: |
+          rm -rf $ALLURE_RESULTS_DIR $ALLURE_REPORT_DIR
+          behave -f allure_behave.formatter:AllureFormatter -o $ALLURE_RESULTS_DIR tests/
+
+      - name: 🧾 Generate Allure Report
+        run: |
+          npm install -g allure-commandline --save-dev
+          allure generate $ALLURE_RESULTS_DIR -o $ALLURE_REPORT_DIR --clean
+
+      - name: 📤 Upload Allure Report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: 🧪 Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: artifacts
+
+      - name: 📦 Upload Raw Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results

@@ -37,6 +37,13 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
           playwright install --with-deps
+          sudo apt-get install xvfb
+
+      - name: Start virtual display
+        run: |
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+          echo "DISPLAY=:99" >> $GITHUB_ENV
 
       - name: 🚀 Run Behave Tests with Allure
         run: |

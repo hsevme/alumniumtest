@@ -12,6 +12,7 @@ jobs:
 
     env:
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      ALUMNIUM_MODEL: ${{ vars.ALUMNIUM_MODEL }}
       ALLURE_RESULTS_DIR: allure-results
       ALLURE_REPORT_DIR: allure-report
 

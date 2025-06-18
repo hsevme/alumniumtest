@@ -52,6 +52,31 @@ jobs:
         run: |          
           echo $GITHUB_ENV
 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Push Allure report to gh-pages
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git checkout --orphan gh-pages
+          cp -r allure-report/* .
+          git add .
+          git commit -m "Update Allure report"
+          git push -f origin gh-pages
+
+      - name: Copy previous history (if exists)
+        run: |
+          mkdir -p allure-report/history
+          if git show origin/gh-pages:history > /dev/null 2>&1; then
+            git fetch
+            git checkout origin/gh-pages -- history
+            cp -r history/ allure-results/history || true
+          fi
+
       - name: 🚀 Run Behave Tests with Allure
         run: |
           rm -rf $ALLURE_RESULTS_DIR $ALLURE_REPORT_DIR
@@ -70,6 +95,14 @@ jobs:
           name: allure-report
           path: allure-report
 
+      - name: 📤 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
+          keep_files: false
+            
       - name: 🧪 Upload Playwright Artifacts
         if: always()
         uses: actions/upload-artifact@v4

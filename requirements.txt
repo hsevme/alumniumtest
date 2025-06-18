@@ -2,3 +2,4 @@ behave
 allure-behave
 playwright
 alumnium
+dotenv

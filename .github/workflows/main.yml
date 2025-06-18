@@ -58,16 +58,6 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: Push Allure report to gh-pages
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git checkout --orphan gh-pages
-          cp -r allure-report/* .
-          git add .
-          git commit -m "Update Allure report"
-          git push -f origin gh-pages
-
       - name: Copy previous history (if exists)
         run: |
           mkdir -p allure-report/history

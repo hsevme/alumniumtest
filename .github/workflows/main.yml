@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
       ALLURE_RESULTS_DIR: allure-results
       ALLURE_REPORT_DIR: allure-report
 

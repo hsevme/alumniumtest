@@ -36,7 +36,7 @@ jobs:
       - name: 🚀 Run Behave Tests with Allure
         run: |
           rm -rf $ALLURE_RESULTS_DIR $ALLURE_REPORT_DIR
-          behave -f allure_behave.formatter:AllureFormatter -o $ALLURE_RESULTS_DIR tests/
+          behave -f allure_behave.formatter:AllureFormatter -o $ALLURE_RESULTS_DIR
 
       - name: 🧾 Generate Allure Report
         run: |

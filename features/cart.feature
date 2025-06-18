@@ -1,107 +1,79 @@
-Feature: Shopping Cart Functionality
+Feature: Shop Home Page Functionality
 
-  Background:
-    Given I am a logged-in user
+  Scenario: Viewing the shop home page
+    Given I am on the shop home page
+    Then I should see the shop title "Shop"
+    And I should see a list of products
 
-  Scenario: Add a single product to the cart
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    Then the cart should contain exactly 1 item
-    And the cart total should equal the price of 1 "Album"
+  Scenario: Viewing product details
+    Given I am on the shop home page
+    When I click on a product named "Album"
+    Then I should see the product details for "Album"
+    And I should see the price of the product as "15,00 €"
 
-  Scenario: Add two different products to the cart
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I add the product "Beanie" to the cart
-    Then the cart should contain exactly 2 different items
-    And the cart total should equal the sum of 1 "Album" and 1 "Beanie"
+  Scenario: Adding a product to the cart
+    Given I am on the shop home page
+    When I click the "Add to cart" button for the product "Beanie"
+    Then I should see the product "Beanie" added to my cart
+    And I should see the cart item count increase by 1
 
-  Scenario: Add the same product multiple times
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I add the product "Album" to the cart again
-    Then the cart should contain 1 line item for "Album"
-    And the quantity of "Album" should be 2
-    And the total should equal the price of 2 "Albums"
+  Scenario: Viewing the cart page
+    Given I have added a product to the cart
+    When I click on the "Cart" link
+    Then I should be redirected to the cart page
+    And I should see the product in my cart
 
-  Scenario: View cart after adding a product
-    Given I am on the Shop page
-    When I add the product "Beanie" to the cart
-    And I go to the Cart page
-    Then the cart should list "Beanie"
-    And the quantity for "Beanie" should be 1
+  Scenario: Searching for a product
+    Given I am on the shop home page
+    When I enter "Beanie" in the search bar and press enter
+    Then I should see search results related to "Beanie"
 
-  Scenario: Update quantity of product in cart
-    Given the cart contains 1 "Beanie"
-    When I go to the Cart page
-    And I update the quantity of "Beanie" to 3
-    Then the cart should show 3 "Beanies"
-    And the total should equal the price of 3 "Beanies"
+  Scenario: Sorting products by price
+    Given I am on the shop home page
+    When I select "Sort by price: low to high" from the sorting dropdown
+    Then I should see the products sorted by price in ascending order
 
-  Scenario: Remove a product from the cart
-    Given the cart contains 1 "Beanie"
-    When I go to the Cart page
-    And I remove "Beanie" from the cart
-    Then the cart should be empty
+  Scenario: Viewing products on sale
+    Given I am on the shop home page
+    Then I should see products with sale badges
+    And I should see the sale price and the original price for those products
 
-  Scenario: Cart persists after page refresh
-    Given I have added "Album" to the cart
-    When I refresh the Shop page
-    Then the cart should still contain "Album"
+  Scenario: Navigating to the contact page
+    Given I am on the shop home page
+    When I click on the "Contact Page" link
+    Then I should be redirected to the contact page
 
-  Scenario: Cart icon displays correct item count
-    Given I am on the Shop page
-    When I add "Album" to the cart
-    And I add "Beanie with Logo" to the cart
-    Then the cart icon should display "2 items"
+  Scenario: Viewing recent posts
+    Given I am on the shop home page
+    When I scroll to the "Recent Posts" section
+    Then I should see a list of recent posts
 
-  Scenario: Cart total reflects discounted product price
-    Given the product "Beanie with Logo" is on sale
-    When I add "Beanie with Logo" to the cart
-    Then the cart total should reflect the discounted price
+  Scenario: Viewing product categories
+    Given I am on the shop home page
+    When I scroll to the "Categories" section
+    Then I should see a list of product categories
 
-  Scenario: Proceed to checkout from cart
-    Given the cart contains 1 "Album"
-    When I go to the Cart page
-    And I click "Proceed to checkout"
-    Then I should be on the Checkout page
+  Scenario: Selecting product options
+    Given I am on the shop home page
+    When I click on "Select options" for the product "Hoodie"
+    Then I should see the available options for "Hoodie"
 
-  Scenario: Add product to cart without being on the Shop page
-    Given I am on the Home page
-    When I attempt to add "Album" to the cart
-    Then I should be redirected to the Shop page
-    And "Album" should be added to the cart
+  Scenario: Viewing archives
+    Given I am on the shop home page
+    When I scroll to the "Archives" section
+    Then I should see a list of archives by month
 
-  Scenario: Cart total updates after removing one of multiple products
-    Given the cart contains "Album" and "Beanie"
-    When I remove "Beanie" from the cart
-    Then the cart should only contain "Album"
-    And the total should equal the price of "Album"
+  Scenario: Logging in to the shop
+    Given I am on the shop home page
+    When I click on the "Log in" link in the Meta section
+    Then I should be redirected to the login page
 
-  Scenario: Attempt to add out-of-stock product
-    Given the product "Limited Edition Vinyl" is out of stock
-    When I try to add "Limited Edition Vinyl" to the cart
-    Then I should see a message "Product is out of stock"
-    And the cart should not contain "Limited Edition Vinyl"
+  Scenario: Viewing the checkout page
+    Given I have added a product to the cart
+    When I click on the "Checkout Page" link
+    Then I should be redirected to the checkout page
 
-  Scenario: Clear all items from cart
-    Given the cart contains multiple products
-    When I click "Clear Cart"
-    Then the cart should be empty
-    And the cart total should be $0
-
-  Scenario: Cart handles fractional prices
-    Given I am on the Shop page
-    When I add the product "Digital Track" priced at $0.99 to the cart
-    Then the cart total should be $0.99
-
-  Scenario: Ensure cart item quantity cannot be set to negative
-    Given the cart contains 1 "Album"
-    When I attempt to set the quantity of "Album" to -1
-    Then I should see an error "Invalid quantity"
-    And the quantity should remain 1
-
-  Scenario: Ensure cart handles 0 quantity removal
-    Given the cart contains 1 "Album"
-    When I set the quantity of "Album" to 0
-    Then "Album" should be removed from the cart
+  Scenario: Viewing entries feed
+    Given I am on the shop home page
+    When I click on the "Entries feed" link in the Meta section
+    Then I should be redirected to the entries feed page

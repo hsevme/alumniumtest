@@ -40,6 +40,7 @@ def before_scenario(context, scenario):
 
     # === Setup Alumni ===
     model_provider = os.environ.get("ALUMNIUM_MODEL", "ollama").lower()
+    print("model provider:", model_provider)
     context.al = Alumni(context.page, Model(model_provider))
 
 

@@ -6,7 +6,6 @@ import os
 import shutil
 import allure
 
-
 def before_all(context):
     load_dotenv()
     context.playwright = sync_playwright().start()

@@ -39,7 +39,7 @@ def before_scenario(context, scenario):
     context.page.goto("https://autoprojekt.simplytest.de/")
 
     # === Setup Alumni ===
-    model_provider = os.environ.get("ALUMNIUM_MODEL", "ollama").lower()
+    model_provider = "google"
     print("model provider:", model_provider)
     context.al = Alumni(context.page, Model(model_provider))
 

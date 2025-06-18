@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    permissions: write
     runs-on: ubuntu-latest
 
     env:

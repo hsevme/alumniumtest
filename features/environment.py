@@ -22,7 +22,7 @@ def before_scenario(context, scenario):
     os.makedirs(trace_dir, exist_ok=True)
 
     # === Launch browser context with video recording ===
-    context.browser = context.playwright.chromium.launch(headless=False, slow_mo=50)
+    context.browser = context.playwright.chromium.launch(headless=True, slow_mo=50)
     context.pw_context = context.browser.new_context(
         record_video_dir=video_dir,
         viewport={"width": 1280, "height": 800}

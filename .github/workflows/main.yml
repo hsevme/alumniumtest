@@ -51,11 +51,13 @@ jobs:
           behave -f allure_behave.formatter:AllureFormatter -o $ALLURE_RESULTS_DIR
 
       - name: 🧾 Generate Allure Report
+        if: always()
         run: |
           npm install -g allure-commandline --save-dev
           allure generate $ALLURE_RESULTS_DIR -o $ALLURE_REPORT_DIR --clean
 
       - name: 📤 Upload Allure Report as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report

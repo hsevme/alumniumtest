@@ -15,9 +15,11 @@ env:
   ALLURE_REPORT_DIR: allure-report
 
 jobs:
-  prepare:
-    name: 🏗️ Prepare test environment
+  test:
+    name: 🧪 Prepare and Run Tests
     runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
     steps:
       - name: 📥 Checkout Code
@@ -50,24 +52,10 @@ jobs:
           key: sqlite-cache-${{ runner.os }}
           restore-keys: sqlite-cache-
 
-  test:
-    name: 🧪 Run Tests
-    runs-on: ubuntu-latest
-    needs: prepare
-    outputs:
-      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
-
-    steps:
       - name: 🚀 Run Behave Tests with Allure
         run: |
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
-  post-actions:
-    name: 📦 Wrap up tests
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
       - name: 💾 Save SQLite Cache
         if: always()
         uses: actions/cache@v4
@@ -92,7 +80,7 @@ jobs:
   report:
     name: 🧾 Generate Allure Report
     runs-on: ubuntu-latest
-    needs: post-actions
+    needs: test
     if: always()
 
     steps:

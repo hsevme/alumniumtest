@@ -9,19 +9,22 @@ Feature: checkout page
   Scenario: checkout page has elements
     Then "there is a heading 'Checkout page'"
     And "there are the following small headings:"
+      | HEADING                |
       | Billing details        |
       | Additional information |
       | Your order             |
     And "there are the following 'Billing details' fields:"
-      | First name       | required                           |
-      | Last name        | required                           |
-      | Company name     | optional                           |
-      | Country / Region | required                           |
-      | Street address   | two input fields with placeholders |
-      | Town / City      | required                           |
-      | Postcode / ZIP   | required                           |
-      | Phone            | required                           |
-      | Email address    | required                           |
+      | FIELD LABEL                  | NOTE     |
+      | First name                   | required |
+      | Last name                    | required |
+      | Company name                 | optional |
+      | Country / Region             | required |
+      | Street address               | required |
+      | Apartment, suite, unit, etc. | optional |
+      | Town / City                  | required |
+      | Postcode / ZIP               | required |
+      | Phone                        | required |
+      | Email address                | required |
     And "there is one optional input field 'Order notes' under 'Additional information'"
 
   Scenario: checkout page input field shows whether entered billing info is valid

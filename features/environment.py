@@ -38,7 +38,10 @@ def before_scenario(context, scenario):
     context.page = context.pw_context.new_page()
 
     # === Setup Alumni ===
-    context.al = Alumni(context.page, Model("google"))
+    model_provider = os.environ.get("ALUMNIUM_MODEL")
+    if not model_provider: model_provider = "google"
+    print(f"model provider: {model_provider}")
+    context.al = Alumni(context.page, Model(model_provider))
 
 
 def after_scenario(context, scenario):

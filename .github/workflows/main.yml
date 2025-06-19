@@ -2,9 +2,11 @@ name: 🚦 Run Tests and Generate Allure Report
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "**" ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: '0 * * * *'  # every hour on the hour (UTC)
 
 jobs:
   test:
@@ -49,6 +51,7 @@ jobs:
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
       - name: 💾 Save SQLite Cache
+        if: always()
         uses: actions/cache@v4
         with:
           path: .alumnium-cache.sqlite

@@ -3,7 +3,7 @@ Feature: cart page
   Background:
     Given I am on the home page
     When "I click on 'Add to cart' button of product 'Album'"
-    And "I click the 'View cart' button"
+    And "I click on 'View cart'"
 
   Scenario: cart page shows details
     Then "the product 'Album' listed in the cart"

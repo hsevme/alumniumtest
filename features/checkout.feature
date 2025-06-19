@@ -1,20 +1,43 @@
-Feature: Checkout Process
+Feature: checkout page
 
-  Scenario: Proceed to checkout
-    Given I have added a product to the cart
-    When I click the "Proceed to checkout" button on the cart page
-    Then I should be redirected to the checkout page
-    And I should see the "Billing details" form
+  Background:
+    Given I am on the home page
+    When "I click on 'Add to cart' button of product 'Album'"
+    And "I click the 'View cart' button"
+    And "I click the 'Proceed to checkout' button"
 
-  Scenario: Fill out billing details
-    Given I am on the checkout page
-    When I fill out the "Billing details" form with valid information
-    And I select a payment method
-    Then I should be able to place the order
+  Scenario: checkout page has elements
+    Then "there is a heading 'Checkout page'"
+    And "there are the following small headings:"
+      | Billing details        |
+      | Additional information |
+      | Your order             |
+    And "there are the following 'Billing details' fields:"
+      | First name       | required                           |
+      | Last name        | required                           |
+      | Company name     | optional                           |
+      | Country / Region | required                           |
+      | Street address   | two input fields with placeholders |
+      | Town / City      | required                           |
+      | Postcode / ZIP   | required                           |
+      | Phone            | required                           |
+      | Email address    | required                           |
+    And "there is one optional input field 'Order notes' under 'Additional information'"
 
-  Scenario: Place an order
-    Given I am on the checkout page
-    And I have filled out the "Billing details" form
-    When I click the "Place order" button
-    Then I should see an order confirmation
-    And I should receive an order confirmation email
+  Scenario: checkout page input field shows whether entered billing info is valid
+    When "I fill the 'First name' input with valid information"
+    Then I see that "a green bar indicates the information in the 'First name' input field is valid"
+    When "I clear the 'First name' input field and click the 'Last name' input field"
+    Then I see that "a red bar indicates the information in the 'First name' input field is invalid"
+
+  Scenario: checkout page points to order received page
+    When "I fill out the 'Billing details' form with valid information"
+    And "I click the 'Place order' button"
+    Then "I am on the order received page"
+
+  Scenario: checkout page shows price details
+    Then "price and quantity of 'Album' is displayed: 15.00 EUR"
+    And "the subtotal and total prices are displayed: each 15.00 EUR"
+
+  Scenario: checkout page shows payment options
+    Then "I see direct bank transfer is the only available payment option"

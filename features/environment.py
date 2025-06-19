@@ -35,7 +35,6 @@ def before_scenario(context, scenario):
 
     # === Create page and go to app ===
     context.page = context.pw_context.new_page()
-    context.page.goto("https://autoprojekt.simplytest.de/")
 
     # === Setup Alumni ===
     model_provider = "google"

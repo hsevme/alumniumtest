@@ -1,0 +1,9 @@
+First name,required
+Last name,required
+Company name,optional
+Country / Region,required
+Street address,two input fields with placeholders
+Town / City,required
+Postcode / ZIP,required
+Phone,required
+Email address,required

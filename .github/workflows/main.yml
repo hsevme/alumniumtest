@@ -9,11 +9,9 @@ on:
     - cron: '0 * * * *'  # every hour on the hour (UTC)
 
 jobs:
-  test:
-    name: 🧪 Run Tests
+  prepare:
+    name: Prepare test environment
     runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
     steps:
       - name: 📥 Checkout Code
@@ -46,10 +44,22 @@ jobs:
           key: sqlite-cache-${{ runner.os }}
           restore-keys: sqlite-cache-
 
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
+
+    steps:
       - name: 🚀 Run Behave Tests with Allure
         run: |
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
+  post-actions:
+    name: Wrap up tests
+    runs-on: ubuntu-latest
+
+    steps:
       - name: 💾 Save SQLite Cache
         if: always()
         uses: actions/cache@v4

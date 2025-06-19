@@ -5,6 +5,7 @@ from alumnium import Alumni, Model
 import os
 import shutil
 import allure
+import time
 
 def before_all(context):
     load_dotenv()
@@ -60,13 +61,21 @@ def after_scenario(context, scenario):
     # Note: videos are saved inside record_video_dir per page
     # We move them to a known location to attach
     video_dir = os.path.join("artifacts", "videos", safe_name)
+    video_path = None
     if os.path.exists(video_dir):
         for file in os.listdir(video_dir):
             if file.endswith(".webm"):
                 full_path = os.path.join(video_dir, file)
-                dest_path = os.path.join("artifacts", "videos", f"{safe_name}.webm")
-                shutil.move(full_path, dest_path)
-                allure.attach.file(dest_path, name="Video", attachment_type=AttachmentType.WEBM)
+
+                # Wait for the file to become non-zero size
+                for _ in range(10):
+                    if os.path.getsize(full_path) > 0:
+                        break
+                    time.sleep(0.5)
+
+                video_path = os.path.join("artifacts", "videos", f"{safe_name}.webm")
+                shutil.move(full_path, video_path)
+                allure.attach.file(video_path, name="Video", attachment_type=AttachmentType.WEBM)
 
     # === Clean up Playwright objects ===
     context.page.close()

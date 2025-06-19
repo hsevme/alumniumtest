@@ -33,6 +33,7 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
+          echo  "ALUMNIUM MODEL: "$ALUMNIUM_MODEL
           sudo apt update
           sudo apt install -y ffmpeg curl unzip xvfb
           pip install --upgrade pip
@@ -89,6 +90,13 @@ jobs:
           name: allure-results
           path: allure-results
 
+      - name: 📥 Download Previous Allure History
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: allure-results/history
+
       - name: 🧾 Generate Allure Report
         if: always()
         run: |
@@ -101,6 +109,13 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
+      - name: 📤 Upload Allure History
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: allure-report/history
 
       - name: 📥 Download Allure Report
         if: always()

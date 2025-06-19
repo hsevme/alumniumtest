@@ -16,7 +16,7 @@ env:
 
 jobs:
   prepare:
-    name: Prepare test environment
+    name: 🏗️ Prepare test environment
     runs-on: ubuntu-latest
 
     steps:
@@ -63,7 +63,7 @@ jobs:
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
   post-actions:
-    name: Wrap up tests
+    name: 📦 Wrap up tests
     runs-on: ubuntu-latest
     needs: test
 

@@ -53,6 +53,7 @@ jobs:
   test:
     name: 🧪 Run Tests
     runs-on: ubuntu-latest
+    needs: prepare
     outputs:
       cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
@@ -64,6 +65,7 @@ jobs:
   post-actions:
     name: Wrap up tests
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: 💾 Save SQLite Cache
@@ -90,7 +92,7 @@ jobs:
   report:
     name: 🧾 Generate Allure Report
     runs-on: ubuntu-latest
-    needs: test
+    needs: post-actions
     if: always()
 
     steps:

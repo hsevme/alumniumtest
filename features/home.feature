@@ -42,7 +42,7 @@ Feature: home page
   Scenario: home page has search function
     Then "there is a search bar"
     When "I type 'Album' into the search bar and press enter"
-    Then "I am on the search results for 'Album' page"
+    Then "I am on the product details page for 'Album'""
 
   Scenario: home page shows cart details
     Then I see that "there are cart details displayed in the upper right corner"

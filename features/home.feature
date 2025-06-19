@@ -31,8 +31,8 @@ Feature: home page
 
   Scenario: home page points to cart page
     When "I add 'Album' to the cart"
-    Then "'View cart' button is visible next to 'Add to cart' button of 'Album'"
-    When "I click on 'View cart'"
+    Then I see that "'View cart' button is placed next to 'Add to cart' button of 'Album'"
+    When I click on the 'View cart' button
     Then "I am on the cart page"
 
   Scenario: home page can add product to cart

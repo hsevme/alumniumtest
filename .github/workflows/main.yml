@@ -47,28 +47,23 @@ jobs:
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
       - name: ♻️ Restore SQLite Cache
-        id: restore_cache
-        uses: actions/cache@v4
+        if: always()
+        continue-on-error: true
+        uses: actions/download-artifact@v4
         with:
+          name: alumnium-cache
           path: .alumnium-cache.sqlite
-          key: sqlite-cache-${{ runner.os }}
-          restore-keys: sqlite-cache-
 
       - name: 🚀 Run Behave Tests with Allure
         run: |
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
-      - name: Check cache
-        if: always()
-        run: |
-          ls -als
-
       - name: 💾 Save SQLite Cache
         if: always()
-        uses: actions/cache@v4
+        uses: actions/upload-artifact@v4
         with:
+          name: alumnium-cache
           path: .alumnium-cache.sqlite
-          key: sqlite-cache-${{ runner.os }}-${{ github.run_id }}
 
       - name: 📂 Upload Playwright Artifacts
         if: always()

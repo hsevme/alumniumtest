@@ -59,6 +59,7 @@ jobs:
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
       - name: Check cache
+        if: always()
         run: |
           ls -als
 

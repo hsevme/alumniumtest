@@ -1,0 +1,1 @@
+[![🚦 Run Tests and Generate Allure Report](https://github.com/hsevme/alumniumtest/actions/workflows/main.yml/badge.svg)](https://github.com/hsevme/alumniumtest/actions/workflows/main.yml)

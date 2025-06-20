@@ -1,6 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","15982","cart page item quantity can be increased","","Fri Jun 20 20:46:28 UTC 2025","passed","Fri Jun 20 20:46:44 UTC 2025","","","",""
-"","91963","cart page item quantity cannot be decreased to negative value","","Fri Jun 20 20:47:24 UTC 2025","passed","Fri Jun 20 20:48:56 UTC 2025","","","",""
-"","16061","cart page item can be deleted from cart","","Fri Jun 20 20:48:56 UTC 2025","passed","Fri Jun 20 20:49:12 UTC 2025","","","",""
-"","39594","cart page item quantity can be decreased","","Fri Jun 20 20:46:44 UTC 2025","passed","Fri Jun 20 20:47:24 UTC 2025","","","",""
-"","17190","cart page shows details","","Fri Jun 20 20:46:11 UTC 2025","passed","Fri Jun 20 20:46:28 UTC 2025","","","",""

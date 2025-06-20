@@ -44,11 +44,6 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: Unzip Alumnium Cache
-        run: |
-          unzip .alumnium-cache.sqlite.zip -d .
-          rm .alumnium-cache.sqlite.zip
-
       - name: 📥 Download Allure Report
         if: always()
         continue-on-error: true

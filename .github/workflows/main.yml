@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 * * * *'  # every hour on the hour (UTC)
+    - cron: '5,20,35,50 * * * *'  # every 15 minutes, starting at h:05
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

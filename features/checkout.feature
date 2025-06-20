@@ -30,7 +30,8 @@ Feature: checkout page
   Scenario: checkout page input field shows whether entered billing info is valid
     When "I fill the 'First name' input with valid information"
     Then I see that "a green bar indicates the information in the 'First name' input field is valid"
-    When "I clear the 'First name' input field and click the 'Last name' input field"
+    When I clear the input field 'First name'
+    And "click the 'Last name' input field"
     Then I see that "a red bar indicates the information in the 'First name' input field is invalid"
 
   Scenario: checkout page points to order received page

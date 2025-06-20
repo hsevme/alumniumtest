@@ -44,13 +44,18 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: ♻️ Restore SQLite Cache
+      - name: ♻️ Restore Alumnium Cache
         if: always()
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: alumnium-cache
-          path: .alumnium-cache.sqlite
+          path: .alumnium-cache.sqlite.zip
+
+      - name: Unzip Alumnium Cache
+        run: |
+          unzip .alumnium-cache.sqlite.zip -d .
+          rm .alumnium-cache.sqlite.zip
 
       - name: 📥 Download Allure Report
         if: always()

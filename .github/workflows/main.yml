@@ -44,14 +44,6 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: ♻️ Restore Alumnium Cache
-        if: always()
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: alumnium-cache
-          path: .alumnium-cache.sqlite.zip
-
       - name: Unzip Alumnium Cache
         run: |
           unzip .alumnium-cache.sqlite.zip -d .
@@ -76,13 +68,12 @@ jobs:
         if: always()
         run: ls -als
 
-      - name: 💾 Save SQLite Cache
-        if: always()
-        uses: actions/upload-artifact@v4
+      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         with:
-          name: alumnium-cache
-          path: .alumnium-cache.sqlite
-          include-hidden-files: 'true'
+          author_name: cache-bot
+          author_email: cache-bot@mailprovi
+          message: 'Update alumnium cache'
+          push: false
 
       - name: 📂 Upload Playwright Artifacts
         if: always()

@@ -1,62 +1,96 @@
-name: Run Tests and Generate Allure Report
+name: 🚦 Run Tests and Generate Allure Report
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: '5,20,35,50 * * * *'  # every 15 minutes, starting at h:05
+
+env:
+  GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+  ALUMNIUM_MODEL: ${{ vars.ALUMNIUM_MODEL }}
 
 jobs:
   test:
+    name: Run Tests
+    permissions: write-all
     runs-on: ubuntu-latest
-
-    env:
-      ALLURE_RESULTS_DIR: allure-results
-      ALLURE_REPORT_DIR: allure-report
+    outputs:
+      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
     steps:
-      - name: 🛎️ Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: execute
 
-      - name: 🐍 Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 📦 Install dependencies
+      - name: Install Dependencies
         run: |
+          echo  "ALUMNIUM MODEL: "$ALUMNIUM_MODEL
           sudo apt update
-          sudo apt install -y ffmpeg curl unzip
+          sudo apt install -y ffmpeg curl unzip xvfb
           pip install --upgrade pip
           pip install -r requirements.txt
           playwright install --with-deps
 
-      - name: 🚀 Run Behave Tests with Allure
+      - name: Start Virtual Display
         run: |
-          rm -rf $ALLURE_RESULTS_DIR $ALLURE_REPORT_DIR
-          behave -f allure_behave.formatter:AllureFormatter -o $ALLURE_RESULTS_DIR tests/
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+          echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: 🧾 Generate Allure Report
+      - name: Remove results directory
+        run: rm -rf allure-results
+
+      - name: Run Behave Tests with Allure
         run: |
-          npm install -g allure-commandline --save-dev
-          allure generate $ALLURE_RESULTS_DIR -o $ALLURE_REPORT_DIR --clean
+          behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
-      - name: 📤 Upload Allure Report as artifact
-        uses: actions/upload-artifact@v4
+      - name: Check dir
+        if: always()
+        run: ls -als
+
+      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+        if: always()
         with:
-          name: allure-report
-          path: allure-report
+          author_name: cache-bot
+          author_email: cache-bot@mailprovid.er
+          message: 'Update alumnium cache and allure report'
+          push: true
 
-      - name: 🧪 Upload Playwright Artifacts
+      - name: Upload Playwright Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts
           path: artifacts
 
-      - name: 📦 Upload Raw Allure Results
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          mv allure-report/history allure-results/history
+          npm install -g allure-commandline --save-dev
+          allure generate allure-results -o allure-report
+
+      - name: Upload Allure Report as Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
-          path: allure-results
+          name: allure-report
+          path: allure-report
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
+          keep_files: false

@@ -14,24 +14,24 @@ env:
 
 jobs:
   test:
-    name: 🧪 Prepare and Run Tests
+    name: Run Tests
     permissions: write-all
     runs-on: ubuntu-latest
     outputs:
       cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           ref: execute
 
-      - name: 🐍 Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: |
           echo  "ALUMNIUM MODEL: "$ALUMNIUM_MODEL
           sudo apt update
@@ -40,7 +40,7 @@ jobs:
           pip install -r requirements.txt
           playwright install --with-deps
 
-      - name: 🖥️ Start Virtual Display
+      - name: 🖥Start Virtual Display
         run: |
           export DISPLAY=:99
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
@@ -49,7 +49,7 @@ jobs:
       - name: Remove results directory
         run: rm -rf allure-results
 
-      - name: 🚀 Run Behave Tests with Allure
+      - name: Run Behave Tests with Allure
         run: |
           behave -f allure_behave.formatter:AllureFormatter -o allure-results
 
@@ -65,28 +65,28 @@ jobs:
           message: 'Update alumnium cache and allure report'
           push: true
 
-      - name: 📂 Upload Playwright Artifacts
+      - name: Upload Playwright Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts
           path: artifacts
 
-      - name: 🧾 Generate Allure Report
+      - name: Generate Allure Report
         if: always()
         run: |
           mv allure-report/history allure-results/history
           npm install -g allure-commandline --save-dev
           allure generate allure-results -o allure-report --clean
 
-      - name: 📤 Upload Allure Report as Artifact
+      - name: Upload Allure Report as Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
 
-      - name: 🌐 Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:

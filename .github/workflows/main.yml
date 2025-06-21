@@ -44,14 +44,6 @@ jobs:
           Xvfb :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: 📥 Download Allure Report
-        if: always()
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
-
       - name: Remove results directory
         run: rm -rf allure-results
 
@@ -66,9 +58,9 @@ jobs:
       - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         with:
           author_name: cache-bot
-          author_email: cache-bot@mailprovi
+          author_email: cache-bot@mailprovid.er
           message: 'Update alumnium cache'
-          push: false
+          push: true
 
       - name: 📂 Upload Playwright Artifacts
         if: always()
@@ -77,15 +69,10 @@ jobs:
           name: playwright-artifacts
           path: artifacts
 
-      - name: Move history to allure results
-        run: |
-          ls -als allure-results
-          mv allure-report/history allure-results/history
-          ls -als allure-results
-
       - name: 🧾 Generate Allure Report
         if: always()
         run: |
+          mv allure-report/history allure-results/history
           npm install -g allure-commandline --save-dev
           allure generate allure-results -o allure-report --clean
 

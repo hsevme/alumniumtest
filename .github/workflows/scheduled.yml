@@ -1,10 +1,8 @@
 name: 🚦 Run Tests and Generate Allure Report
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: '5,20,35,50 * * * *'  # every 15 minutes, starting at h:05
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

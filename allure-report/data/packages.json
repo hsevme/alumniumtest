@@ -1,1 +1,1 @@
-{"uid":"83edc06c07f9ae9e47eb6dd1b683e4e2","name":"packages","children":[{"name":"cart page shows details","uid":"24203f751b13a0b","parentUid":"83edc06c07f9ae9e47eb6dd1b683e4e2","status":"broken","time":{"start":1750621973914,"stop":1750622543666,"duration":569752},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":true,"retriesCount":0,"retriesStatusChange":false,"parameters":[],"tags":[]}]}
+{"uid":"83edc06c07f9ae9e47eb6dd1b683e4e2","name":"packages","children":[]}

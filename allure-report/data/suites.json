@@ -1,1 +1,1 @@
-{"uid":"98d3104e051c652961429bf95fa0b5d6","name":"suites","children":[{"name":"cart page shows details","uid":"24203f751b13a0b","parentUid":"98d3104e051c652961429bf95fa0b5d6","status":"broken","time":{"start":1750621973914,"stop":1750622543666,"duration":569752},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":true,"retriesCount":0,"retriesStatusChange":false,"parameters":[],"tags":[]}]}
+{"uid":"98d3104e051c652961429bf95fa0b5d6","name":"suites","children":[]}

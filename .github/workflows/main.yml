@@ -76,6 +76,7 @@ jobs:
         if: always()
         run: |
           mv allure-report/history allure-results/history
+          rm -rf allure-report
           npm install -g allure-commandline --save-dev
           allure generate allure-results -o allure-report
 

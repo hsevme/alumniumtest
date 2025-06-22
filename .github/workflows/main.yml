@@ -57,14 +57,6 @@ jobs:
         if: always()
         run: ls -als
 
-      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
-        if: always()
-        with:
-          author_name: cache-bot
-          author_email: cache-bot@mailprovid.er
-          message: 'Update alumnium cache and allure report'
-          push: true
-
       - name: Upload Playwright Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -80,12 +72,13 @@ jobs:
           npm install -g allure-commandline --save-dev
           allure generate allure-results -o allure-report
 
-      - name: Upload Allure Report as Artifact
+      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          author_name: cache-bot
+          author_email: cache-bot@mailprovid.er
+          message: 'Update alumnium cache and allure report'
+          push: true
 
       - name: Deploy to GitHub Pages
         if: always()

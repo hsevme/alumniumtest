@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: execute
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -81,6 +83,7 @@ jobs:
           author_email: cache-bot@mailprovid.er
           message: 'Update alumnium cache and allure report'
           push: true
+          new_branch: execute
 
       - name: Deploy to GitHub Pages
         if: always()

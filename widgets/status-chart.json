@@ -1,1 +1,1 @@
-[{"uid":"24203f751b13a0b","name":"cart page shows details","time":{"start":1750621973914,"stop":1750622543666,"duration":569752},"status":"broken","severity":"normal"}]
+[{"uid":"6460745612d1455b","name":"cart page shows details","time":{"start":1750621206658,"stop":1750621776174,"duration":569516},"status":"broken","severity":"normal"},{"uid":"bd966f3cf5914c1d","name":"cart page item quantity can be increased","time":{"start":1750621776174,"stop":1750622908787,"duration":1132613},"status":"broken","severity":"normal"}]

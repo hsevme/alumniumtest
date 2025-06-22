@@ -1,0 +1,7 @@
+behave~=1.2.6
+allure-behave
+playwright~=1.52.0
+alumnium~=0.11.0
+dotenv~=0.9.9
+python-dotenv~=1.1.0
+allure-python-commons~=2.14.3

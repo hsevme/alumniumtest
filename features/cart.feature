@@ -1,66 +1,48 @@
-Feature: Shopping Cart Functionality
+Feature: cart page
 
-  Scenario: Add a single product to the cart
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    Then the cart should contain 1 item
-    And the cart total should reflect the price of "Album"
+  Background:
+    Given I am on the home page
+    When "I click on 'Add to cart' button of product 'Album'"
+    And I click on the 'View cart' button
 
-  Scenario: Add multiple different products to the cart
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I add the product "Beanie" to the cart
-    Then the cart should contain 2 items
-    And the total price should be the sum of "Album" and "Beanie"
+  Scenario: cart page shows details
+    Then "the product 'Album' listed in the cart"
+    And "the price of 'Album' is 15.00 EUR"
+    And "the quantity of 'Album' is 1"
+    And "the subtotal is 15.00 EUR"
 
-  Scenario: Add the same product multiple times
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I add the product "Album" to the cart again
-    Then the cart should contain 1 line item for "Album"
-    And the quantity should be 2
+  Scenario: cart page item quantity can be increased
+    When "I change the quantity of 'Album' to 2"
+    And "I click the 'Update cart' button"
+    Then I see that "a green banner shows that cart was updated"
+    And "the updated quantity of 'Album' is 2"
+    And "the updated subtotal is 30.00 EUR"
 
-  Scenario: View cart after adding products
-    Given I am on the Shop page
-    When I add the product "Beanie" to the cart
-    And I navigate to the Cart page
-    Then I should see "Beanie" listed in the cart
-    And the quantity should be 1
+  Scenario: cart page item quantity can be decreased
+    When "I change the quantity of 'Album' to 0"
+    And "I click the 'Update cart' button"
+    Then I see that "a green banner shows that cart was updated"
+    And I see that "a blue banner shows that my cart is currently empty"
 
-  Scenario: Update product quantity in cart
-    Given I am on the Shop page
-    When I add the product "Beanie" to the cart
-    And I navigate to the Cart page
-    And I change the quantity of "Beanie" to 3
-    Then the cart total should update to the price of 3 "Beanies"
+  Scenario: cart page item quantity cannot be decreased to negative value
+    When "I enter '-1' into the quantity field of 'Album' and press enter"
+    Then I see that "a message states that quantity cannot be set to negative value"
+    And "there is one product 'Album' in cart"
+    And "the total price is 15.00 EUR"
 
-  Scenario: Remove a product from the cart
-    Given I am on the Shop page
-    When I add the product "Beanie" to the cart
-    And I navigate to the Cart page
-    And I remove "Beanie" from the cart
-    Then the cart should be empty
+  Scenario: cart page item can be deleted from cart
+    When "I click the delete button in 'Album' row of cart table"
+    Then "my cart is empty"
 
-  Scenario: Cart persists across page reload
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I refresh the page
-    Then the cart should still contain "Album"
+  Scenario: cart page total cannot be decreased by invalid coupon code
+    When "I enter 'XYZ' as coupon code and press 'Apply coupon'"
+    Then I see that "a red message says that coupon code 'XYZ' does not exist"
+    And "the total price is 15.00 EUR"
 
-  Scenario: Cart displays correct item count
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I add the product "Beanie with Logo" to the cart
-    Then the cart icon should show "2 items"
+  Scenario: cart page points to checkout page
+    When "I click the 'Proceed to checkout' button"
+    Then "I am on the checkout page"
 
-  Scenario: Cart total reflects discounts
-    Given I am on the Shop page
-    When I add the product "Beanie with Logo" (on sale) to the cart
-    Then the cart total should reflect the discounted price
-
-  Scenario: Proceed to checkout from cart
-    Given I am on the Shop page
-    When I add the product "Album" to the cart
-    And I navigate to the Cart page
-    And I click on the "Proceed to checkout" button
-    Then I should be redirected to the Checkout page
+  Scenario: cart page points to product details page
+    When "I click on the 'Album' product link in cart table"
+    Then "I am on the product details page for 'Album'"

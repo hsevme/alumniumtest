@@ -1,1 +1,1 @@
-{"uid":"ab17fc5a4eb3bca4b216b548c7f9fcbc","name":"timeline","children":[]}
+{"uid":"ab17fc5a4eb3bca4b216b548c7f9fcbc","name":"timeline","children":[{"name":"cart page shows details","uid":"e21e5c74b002495d","parentUid":"ab17fc5a4eb3bca4b216b548c7f9fcbc","status":"broken","time":{"start":1750624470165,"stop":1750625039517,"duration":569352},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":0,"retriesStatusChange":false,"parameters":[],"tags":[]}]}

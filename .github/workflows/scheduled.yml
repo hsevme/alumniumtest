@@ -76,6 +76,10 @@ jobs:
           name: allure-report
           path: allure-report
 
+      - name: Git pull
+        if: always()
+        run: git pull
+
       - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         if: always()
         with:

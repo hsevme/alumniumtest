@@ -87,7 +87,7 @@ jobs:
         with:
           author_name: cache-bot
           author_email: cache-bot@mailprovid.er
-          message: 'Update allure report'
+          message: 'Update alumnium cache and allure report'
           push: true
           new_branch: execute
 

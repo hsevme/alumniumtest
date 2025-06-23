@@ -68,13 +68,13 @@ def after_scenario(context, scenario):
                 full_path = os.path.join(video_dir, file)
 
                 # Wait for the file to become non-zero size
-                for _ in range(10):
-                    if os.path.getsize(full_path) > 0:
+                for _ in range(30):
+                    if os.path.getsize(full_path) > 0 and file_is_not_locked(full_path):
                         break
-                    time.sleep(0.5)
+                    time.sleep(1)
 
                 video_path = os.path.join("artifacts", "videos", f"{safe_name}.webm")
-                shutil.move(full_path, video_path)
+                shutil.copy(full_path, video_path)
                 allure.attach.file(video_path, name="Video", attachment_type=AttachmentType.WEBM)
 
     # === Clean up Playwright objects ===
@@ -88,3 +88,13 @@ def after_scenario(context, scenario):
 
 def after_all(context):
     context.playwright.stop()
+
+
+def file_is_not_locked(file_path):
+    try:
+        # Try to open the file in exclusive mode
+        with open(file_path, 'a'):
+            return True  # File is not in use
+    except OSError:
+        return False # File is in use or locked
+

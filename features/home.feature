@@ -7,8 +7,22 @@ Feature: home page
     Then "there is a heading 'Shop'"
     And "there is a list of products"
 
-  Scenario: home page shows product price
-    Then "I see that the product 'Album' costs 15.00 EUR"
+  Scenario Outline: home page shows product price
+    Then "I see that the product '<product>' costs <price> EUR"
+    Examples:
+      | product            | price         |
+      | Album              | 15.00         |
+      | Beanie             | 18.00         |
+      | Beanie with Logo   | 18.00         |
+      | Belt               | 55.00         |
+      | Cap                | 16.00         |
+      | Hoodie             | 42.00 - 45.00 |
+      | Hoodie with Logo   | 45.00         |
+      | Hoodie with Zipper | 45.00         |
+      | Logo Collection    | 18.00 - 45.00 |
+      | Long Sleeve Tee    | 25.00         |
+      | Polo               | 20.00         |
+      | Single             | 2.00          |
 
   Scenario: home page shows products on sale
     Then "a label shows that 'Beanie' is on sale"

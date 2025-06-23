@@ -83,8 +83,10 @@ def after_scenario(context, scenario):
     context.browser.close()
 
     if hasattr(context.al, "cache"):
-        context.al.cache.session.commit()
-
+        if scenario.status == "passed":
+            context.al.cache.save()
+        else:
+            context.al.cache.discard()
 
 def after_all(context):
     context.playwright.stop()

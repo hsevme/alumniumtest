@@ -15,8 +15,6 @@ jobs:
     name: Run Tests
     permissions: write-all
     runs-on: ubuntu-latest
-    outputs:
-      cache-hit: ${{ steps.restore_cache.outputs.cache-hit }}
 
     steps:
       - name: Checkout Code

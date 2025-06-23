@@ -8,7 +8,7 @@ on:
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-  ALUMNIUM_MODEL: ${{ vars.ALUMNIUM_MODEL }}
+  ALUMNIUM_MODEL: 'google'
 
 jobs:
   test:

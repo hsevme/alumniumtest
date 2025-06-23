@@ -78,10 +78,6 @@ jobs:
           name: allure-report
           path: allure-report
 
-      - name: Delete cache
-        if: always()
-        run: rm -rf .alumnium-cache.sqlite
-
       - name: Git pull
         if: always()
         run: git pull

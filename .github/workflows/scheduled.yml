@@ -1,10 +1,8 @@
-name: 🚦 Run Tests
+name: 🚦 Run Tests (scheduled)
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: '5,20,35,50 * * * *'  # every 15 minutes, starting at h:05
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
@@ -78,16 +76,12 @@ jobs:
           name: allure-report
           path: allure-report
 
-      - name: Git pull
-        if: always()
-        run: git pull
-
       - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         if: always()
         with:
           author_name: cache-bot
           author_email: cache-bot@mailprovid.er
-          message: 'Update allure report'
+          message: 'Update alumnium cache and allure report'
           push: true
           new_branch: execute
 

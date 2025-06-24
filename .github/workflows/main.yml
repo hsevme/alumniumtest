@@ -2,13 +2,13 @@ name: 🚦 Run Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-  ALUMNIUM_MODEL: 'google'
+  ALUMNIUM_MODEL: "google"
 
 jobs:
   test:
@@ -25,7 +25,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install Dependencies
         run: |
@@ -68,7 +68,7 @@ jobs:
           rm -rf allure-report
           npm install -g allure-commandline --save-dev
           allure generate allure-results -o allure-report
-          
+
       - name: Upload Allure Report as Artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -80,12 +80,12 @@ jobs:
         if: always()
         run: git pull
 
-      - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+      - uses: EndBug/add-and-commit@v9
         if: always()
         with:
           author_name: cache-bot
           author_email: cache-bot@mailprovid.er
-          message: 'Update alumnium cache and allure report'
+          message: "Update alumnium cache and allure report"
           push: true
           new_branch: execute
 

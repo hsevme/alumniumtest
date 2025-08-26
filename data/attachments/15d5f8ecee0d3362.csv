@@ -1,0 +1,11 @@
+FIELD LABEL,NOTE
+First name,required
+Last name,required
+Company name,optional
+Country / Region,required
+Street address,required
+"Apartment, suite, unit, etc.",optional
+Town / City,required
+Postcode / ZIP,required
+Phone,required
+Email address,required
